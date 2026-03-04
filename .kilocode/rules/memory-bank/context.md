@@ -1,10 +1,10 @@
-# Active Context: Next.js Starter Template
+# Active Context: ClipSync — Clipboard Manager App
 
 ## Current State
 
-**Template Status**: ✅ Ready for development
+**App Status**: ✅ ClipSync clipboard manager app built and deployed
 
-The template is a clean Next.js 16 starter with TypeScript and Tailwind CSS 4. It's ready for AI-assisted expansion to build any type of application.
+ClipSync is a cross-platform clipboard manager with cloud sync for Linux and Android. Users can manage their clipboard history via a web dashboard and sync from Linux/Android using a REST API with API key authentication.
 
 ## Recently Completed
 
@@ -14,74 +14,62 @@ The template is a clean Next.js 16 starter with TypeScript and Tailwind CSS 4. I
 - [x] ESLint configuration
 - [x] Memory bank documentation
 - [x] Recipe system for common features
+- [x] **ClipSync app**: Full clipboard manager with cloud sync
+  - Database: Drizzle ORM + SQLite (users, clipboard_items, sync_sessions tables)
+  - Auth: Email/password registration + login, API key auth for devices
+  - API routes: CRUD for clipboard items, bulk sync endpoint
+  - Dashboard UI: Search, filter, pin, favorite, copy, delete items
+  - Settings tab: API key display, Linux/Android integration guides
+  - Landing page: Feature showcase + API preview
+  - Docs page: Full REST API documentation
+  - Responsive design for mobile/Android web view
 
 ## Current Structure
 
 | File/Directory | Purpose | Status |
 |----------------|---------|--------|
-| `src/app/page.tsx` | Home page | ✅ Ready |
+| `src/app/page.tsx` | Landing page | ✅ Ready |
 | `src/app/layout.tsx` | Root layout | ✅ Ready |
-| `src/app/globals.css` | Global styles | ✅ Ready |
+| `src/app/login/page.tsx` | Login page | ✅ Ready |
+| `src/app/register/page.tsx` | Register page | ✅ Ready |
+| `src/app/dashboard/page.tsx` | Dashboard (server) | ✅ Ready |
+| `src/app/docs/page.tsx` | API docs page | ✅ Ready |
+| `src/app/api/auth/login/route.ts` | Login API | ✅ Ready |
+| `src/app/api/auth/register/route.ts` | Register API | ✅ Ready |
+| `src/app/api/auth/logout/route.ts` | Logout API | ✅ Ready |
+| `src/app/api/clipboard/route.ts` | Clipboard CRUD | ✅ Ready |
+| `src/app/api/clipboard/[id]/route.ts` | Single item ops | ✅ Ready |
+| `src/app/api/sync/route.ts` | Bulk sync API | ✅ Ready |
+| `src/components/ClipboardDashboard.tsx` | Main dashboard UI | ✅ Ready |
+| `src/db/schema.ts` | DB schema | ✅ Ready |
+| `src/db/index.ts` | DB client | ✅ Ready |
+| `src/lib/auth.ts` | Auth utilities | ✅ Ready |
+| `src/lib/utils.ts` | Helper utilities | ✅ Ready |
 | `.kilocode/` | AI context & recipes | ✅ Ready |
 
-## Current Focus
+## Database Schema
 
-The template is ready. Next steps depend on user requirements:
+- **users**: id, name, email, passwordHash, apiKey, createdAt
+- **clipboard_items**: id, userId, content, contentType, title, tags, isPinned, isFavorite, deviceName, deviceType, syncedAt, createdAt, updatedAt
+- **sync_sessions**: id, userId, deviceName, deviceType, lastSyncAt, createdAt
 
-1. What type of application to build
-2. What features are needed
-3. Design/branding preferences
+## API Endpoints
 
-## Quick Start Guide
-
-### To add a new page:
-
-Create a file at `src/app/[route]/page.tsx`:
-```tsx
-export default function NewPage() {
-  return <div>New page content</div>;
-}
-```
-
-### To add components:
-
-Create `src/components/` directory and add components:
-```tsx
-// src/components/ui/Button.tsx
-export function Button({ children }: { children: React.ReactNode }) {
-  return <button className="px-4 py-2 bg-blue-600 text-white rounded">{children}</button>;
-}
-```
-
-### To add a database:
-
-Follow `.kilocode/recipes/add-database.md`
-
-### To add API routes:
-
-Create `src/app/api/[route]/route.ts`:
-```tsx
-import { NextResponse } from "next/server";
-
-export async function GET() {
-  return NextResponse.json({ message: "Hello" });
-}
-```
-
-## Available Recipes
-
-| Recipe | File | Use Case |
-|--------|------|----------|
-| Add Database | `.kilocode/recipes/add-database.md` | Data persistence with Drizzle + SQLite |
-
-## Pending Improvements
-
-- [ ] Add more recipes (auth, email, etc.)
-- [ ] Add example components
-- [ ] Add testing setup recipe
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/auth/register | Create account |
+| POST | /api/auth/login | Sign in |
+| POST | /api/auth/logout | Sign out |
+| GET | /api/clipboard | List items |
+| POST | /api/clipboard | Add item |
+| PATCH | /api/clipboard/:id | Update item |
+| DELETE | /api/clipboard/:id | Delete item |
+| POST | /api/sync | Bulk sync |
+| GET | /api/sync | Sync status |
 
 ## Session History
 
 | Date | Changes |
 |------|---------|
 | Initial | Template created with base setup |
+| 2026-03-04 | Built ClipSync clipboard manager app with cloud sync for Linux and Android |
